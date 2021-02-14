@@ -1,16 +1,11 @@
 import React from 'react';
 import { render, screen, fireEvent, waitForElementToBeRemoved } from '@testing-library/react';
 import "@testing-library/jest-dom/extend-expect";
-import userEvent from '@testing-library/user-event'
-import Adapter from 'enzyme-adapter-react-16';
+import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 
 import UsersList from './index.js';
-import Users from '../Users/index.js';
-import App from '../../App.js';
-import SC from '../../styles.js';
 import store from "../../store/store.js";
-import mockUsers from "../../store/mockUser.json";
 
 describe('Render a post', () => {
   function renderUsers() {
