@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders learn react link 1`] = `
+<div
+  className="sc-bdfBwQ evlUEU"
+>
+  <div
+    className="sc-gsTCUz dngXxU"
+  >
+    <label
+      className="sc-dlfnbm hOaEdj"
+      htmlFor="search"
+    >
+      Search User
+    </label>
+    <input
+      className="sc-hKgILt cTGSLc"
+      data-testid="search"
+      id="search"
+      onChange={[Function]}
+    />
+  </div>
+</div>
+`;
