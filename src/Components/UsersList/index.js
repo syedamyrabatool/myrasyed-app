@@ -3,11 +3,8 @@ import propTypes from "prop-types";
 import { useDispatch, useSelector } from 'react-redux';
 import { loadPosts } from "../../store/actions/postsAction.js";
 import { loadUsers } from "../../store/actions/usersAction.js";
-
+import Table from './Table.js';
 import SC from '../../styles.js';
-import { displayHeader } from '../helpers.js';
-import Posts from '../Posts';
-import Users from '../Users';
 import Loader from '../Loader';
 
 const UsersList = (props) => {
@@ -18,8 +15,35 @@ const UsersList = (props) => {
   const postsData = useSelector(state => state.posts);
   const usersData = useSelector(state => state.users);
 
-  const columns = ['Name', 'Email', 'City', 'Company'];
-  const postsColumn = ['Title', 'Body'];
+  const userColumns = [
+    {
+      Header: "Name",
+      accessor: "name",
+      filter: 'find',
+    },
+    {
+      Header: "Email",
+      accessor: "email"
+    },
+    {
+      Header: "City",
+      accessor: "address.city"
+    },
+    {
+      Header: "Company",
+      accessor: "company.name"
+    }
+  ];
+  const postColumns = [
+    {
+      Header: "Title",
+      accessor: "title"
+     },
+    {
+      Header: "Body",
+      accessor: "body"
+    }
+  ]
 
   useEffect(() => {
     dispatch(loadUsers());
@@ -43,18 +67,7 @@ const UsersList = (props) => {
       <SC.Posts>
         <Loader isLoading={postsData.isLoading} product='Posts' />
         {!postsData.isLoading && postsData.posts && postsData.posts.length > 0 && (
-          <SC.Table>
-            <colgroup>
-            <col className="post-title" />
-              <col className="post-body" />
-            </colgroup>
-            {displayHeader(postsColumn)}
-             <SC.TBody>
-               {postsData.posts.map((post) => (
-                 <Posts key={post.id} {...post} />
-               ))}
-             </SC.TBody>
-          </SC.Table>
+          <Table columns={postColumns} data={postsData.posts} />
         )}
         {postsData.errorMsg && <SC.NoDataFound>No Posts found.</SC.NoDataFound>}
      </SC.Posts>
@@ -68,22 +81,7 @@ const UsersList = (props) => {
         {!usersData.isLoading && filteredUsers && filteredUsers.length !==0 && (
           <>
             <SC.Users>
-              <SC.Table>
-                {displayHeader(columns)}
-                <SC.TBody>
-                  {filteredUsers.map((user) => (
-                    <Users
-                    id={user.id}
-                    key={user.id}
-                    name={user.name}
-                    email={user.email}
-                    city={user.address.city}
-                    company={user.company.name}
-                    renderPost={getPosts}
-                    />
-                  ))}
-                </SC.TBody>
-              </SC.Table>
+              <Table columns={userColumns} data={filteredUsers} rowClicked={getPosts} filterable filter={searchUser} />
             </SC.Users>
             {searchUser === '' && postsData && displayPosts()}
           </>
@@ -107,7 +105,7 @@ const UsersList = (props) => {
   );
 };
 
-Users.propTypes = {
+UsersList.propTypes = {
   enableSearch: propTypes.bool,
 };
 

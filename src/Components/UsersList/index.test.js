@@ -30,13 +30,12 @@ describe('Render a post', () => {
 
   it('search users', async () => {
     renderUsers();
-    await waitForElementToBeRemoved(() => screen.getByText('Loading Users...'));
-    const testData = screen.queryByText('Leanne Graham');
-    const testDataSearch = screen.queryByText('Clementine Bauch');
+    await waitForElementToBeRemoved(() => screen.getByText('Loading Users...'),{ timeout: 1000 });
+    expect(screen.queryByText('Leanne Graham')).toBeInTheDocument();
     const input = screen.getByTestId('search');
     await userEvent.type(input, 'Clem');
-    expect(testData).not.toBeInTheDocument();
-    expect(testDataSearch).toBeInTheDocument();
+    expect(screen.getByText('Clementine Bauch')).toBeInTheDocument();
+    expect(screen.queryByText('Leanne Graham')).not.toBeInTheDocument();
   });
 
   it('render posts', async () => {
