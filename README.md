@@ -1,10 +1,10 @@
-# Getting Started with Create React App
+# ReactTable with Redux
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
  This is a javascript redux app to 
  
- Display a table of users and 
+ Display a table of users using React Table 
  
  Fetch their posts onClick
  
